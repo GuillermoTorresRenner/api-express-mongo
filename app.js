@@ -25,7 +25,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //INCLUSIÓN DE APIS
-app.use("/api", require("./API/EjemploApi"));
+app.use("/api", require("./API/EjemploApi")); //Agregar en esta sección todos los archivos de APi con los que se vaya a trabajar
+
 
 
 // Middleware para Vue.js router modo history

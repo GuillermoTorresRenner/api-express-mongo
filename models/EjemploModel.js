@@ -18,6 +18,6 @@ const ejemploSchema = new Schema({
 });
 
 // Convertir a modelo
-const EjemploModel = mongoose.model('EjemploModel', ejemploSchema);
+const EjemploModel = mongoose.model('Ejemplo', ejemploSchema); //El nombre que figura como String en el parámetro es el nombre que tendrá la colección en la DB
 
 export default EjemploModel;
