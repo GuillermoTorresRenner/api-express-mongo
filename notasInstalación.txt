@@ -1,0 +1,45 @@
+1) Al comenzar el proyecto, en la carpeta de destino se instala package.json: 
+    npm init --yes
+
+2) Se instala Express
+    npm i express --save
+
+3) Se crea el punto de entrada (index.js)
+
+4) Instalar nodemon de forma global si no se encuentra en el sistema.
+    npm install -g nodemon
+
+5) Se configura el script dev de package.json: "dev": "nodemon app.js", se ejecuta con 
+    npm run dev
+
+6) instalamos el middleware morgan para poder visualizar en el desarrollo las peticiones http
+    npm i morgan --save
+
+7) Instalamos Cors para solventar problemas de bloqueos externos
+    npm install cors --save
+
+8) Habilitamos el modo historia de navegación
+
+    npm install --save connect-history-api-fallback
+
+9) Se crea una carpeta "public" donde estará el front, y que esta referenciada de forma estica en el index.js
+
+10) Se instala Babel para tener características actuales de JS 
+    npm install -D @babel/core @babel/cli @babel/preset-env @babel/node
+
+
+11) Se debe crear un archivo llamado ".babelrc" al que se le debe agregar el siguiente código:
+    {
+  "presets": ["@babel/preset-env"]
+}
+
+12) Se configura la ejecución de bable en los scripts de package.json   
+     "devbabel": "nodemon app.js --exec babel-node"
+
+13) Instalamos mongoose para gestionar las mongoDB
+
+
+
+
+
+
