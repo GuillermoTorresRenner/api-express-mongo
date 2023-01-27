@@ -2,21 +2,11 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
-import mongoose from 'mongoose';
+import connection from './connectionDB';
+
 
 const app = express();
-
-
-//Conexión a la base de datos
-const uri='mongodb://localhost:27017/mi_db'                           /*nombre DB */;
-const options = {useNewUrlParser: true,useUnifiedTopology:true };
-mongoose.set('strictQuery',false);
-
-
-mongoose.connect(uri, options).then(
-   () => { console.log('Conectado a DB') },
-   err => { console.log(err) }
-);
+//Conexión Base de datos
 
 // Middleware
 app.use(morgan('tiny'));

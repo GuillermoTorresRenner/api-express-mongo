@@ -8,88 +8,104 @@ Recordar que se puede personalizar de forma más clara las rutas de cada una de 
 */
 
 import express from 'express';
-import EjemploModel from '../models/EjemploModel'; //Verificar que la ruta del modelo personalizado sea la correcta.
+import connection from '../connectionDB';
 const router = express.Router();
 
 
+
 // CREATE
-router.post('/create', async(req, res) => {
-  const body = req.body;  
-  try {
-    const create = await EjemploModel.create(body);
-    res.status(200).json(create); 
-  } catch (error) {
-    return res.status(500).json({
-      mensaje: 'Ocurrio un error',
-      error
-    })
+router.post('/create', (req, res) => {
+  const query="INSERT INTO usuarios SET ?";
+  const create={
+    nombre:req.body.nombre,
+    apellido:req.body.apellido
   }
-});
+
+      connection.query(query,create,(error,result)=>{
+        if(error){
+          res.status(400).json({
+            mensaje: "Ocurrió un error",
+            error
+          })
+        }else{
+          res.status(200).json(result)
+        }
+      })
+     
+    
+    });
 
 //READ con parámetros
-router.get('/read/:id', async(req, res) => {
-    const _id = req.params.id;
-    try {
-      const read = await EjemploModel.findOne({_id});
-      res.json(read);
-    } catch (error) {
-      return res.status(400).json({
-        mensaje: 'Ocurrio un error',
+router.get('/read/:id', (req, res) => {
+const _id = req.params.id;
+const query=`SELECT * FROM usuarios where usuarios.id=${_id}`
+  connection.query(query,(error,result)=>{
+    if(error){
+      res.status(400).json({
+        mensaje: "Ocurrió un error",
         error
       })
+    }else{
+      res.status(200).json(result)
     }
-  });
-  
+  })
+ 
+
+});
   // READ todos los documentos
-  router.get('/read', async(req, res) => {
-    try {
-      const read = await EjemploModel.find();
-      res.json(read);
-    } catch (error) {
-      return res.status(400).json({
-        mensaje: 'Ocurrio un error',
-        error
+  router.get('/read', (req, res) => {
+
+      const query="SELECT * FROM usuarios"
+      connection.query(query,(error,result)=>{
+        if(error){
+          res.status(400).json({
+            mensaje: "Ocurrió un error",
+            error
+          })
+        }else{
+          res.status(200).json(result)
+
+        }
       })
-    }
+     
+   
   });
 
-  // UPDATE
-router.put('/update/:id', async(req, res) => {
+  // UPDATE (No olvidar poner entre '' los parámetros que se van a modificar en la query!)
+router.put('/update/:id', (req, res) => {
     const _id = req.params.id;
-    const body = req.body;
-    try {
-      const update = await EjemploModel.findByIdAndUpdate(
-        _id,
-        body,
-        {new: true});
-      res.json(update);  
-    } catch (error) {
-      return res.status(400).json({
-        mensaje: 'Ocurrio un error',
-        error
-      })
-    }
+    const {nombre,apellido}=req.body;
+    const query=`UPDATE usuarios SET nombre = '${nombre}', apellido = '${apellido}' WHERE id = ${_id}`
+    connection.query(query,(error,result)=>{
+      if(error){
+        res.status(400).json({
+          mensaje: "Ocurrió un error",
+          error
+        })
+      }else{
+        res.status(200).json(result)
+      }
+    })
+   
+  
   });
 
   // DELETE
 router.delete('/delete/:id', async(req, res) => {
     const _id = req.params.id;
-    try {
-      const destroy = await EjemploModel.findByIdAndDelete({_id});
-      if(!destroy){
-        return res.status(400).json({
-          mensaje: 'No se encontró el id indicado',
+    const query=`DELETE FROM usuarios where usuarios.id=${_id}`
+    connection.query(query,(error,result)=>{
+      if(error){
+        res.status(400).json({
+          mensaje: "Ocurrió un error",
           error
         })
+      }else{
+        res.status(200).json(result)
       }
-      res.json(destroy);  
-    } catch (error) {
-      return res.status(400).json({
-        mensaje: 'Ocurrio un error',
-        error
-      })
-    }
+    })
+   
+  
   });
-
 // Exportamos la configuración de express app
 module.exports = router;
