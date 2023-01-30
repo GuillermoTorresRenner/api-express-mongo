@@ -1,111 +1,87 @@
-/* 
-Para personalizar cambiar en todo el documento:
-
-EjemploModel por el nombre del modelo que se va a tratar en el CRUD
-
-Recordar que se puede personalizar de forma más clara las rutas de cada una de las operaciones CRUD
-
-*/
-
 import express from 'express';
-import connection from '../connectionDB';
 const router = express.Router();
 
+// importar el modelo nota
+import Nota from '../models/EjemploModel';
 
-
-// CREATE
-router.post('/create', (req, res) => {
-  const query="INSERT INTO usuarios SET ?";
-  const create={
-    nombre:req.body.nombre,
-    apellido:req.body.apellido
+// Agregar una nota
+router.post('/nueva-nota', async(req, res) => {
+  const body = req.body;  
+  try {
+    const notaDB = await Nota.create(body);
+    res.status(200).json(notaDB); 
+  } catch (error) {
+    return res.status(500).json({
+      mensaje: 'Ocurrio un error',
+      error
+    })
   }
+});
 
-      connection.query(query,create,(error,result)=>{
-        if(error){
-          res.status(400).json({
-            mensaje: "Ocurrió un error",
-            error
-          })
-        }else{
-          res.status(200).json(result)
-        }
-      })
-     
-    
-    });
+// Get con parámetros
+router.get('/nota/:id', async(req, res) => {
+  const _id = req.params.id;
+  try {
+    const notaDB = await Nota.findOne({_id});
+    res.json(notaDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'Ocurrio un error',
+      error
+    })
+  }
+});
 
-//READ con parámetros
-router.get('/read/:id', (req, res) => {
-const _id = req.params.id;
-const query=`SELECT * FROM usuarios where usuarios.id=${_id}`
-  connection.query(query,(error,result)=>{
-    if(error){
-      res.status(400).json({
-        mensaje: "Ocurrió un error",
+// Get con todos los documentos
+router.get('/nota', async(req, res) => {
+  try {
+    const notaDb = await Nota.find();
+    res.json(notaDb);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'Ocurrio un error',
+      error
+    })
+  }
+});
+
+// Delete eliminar una nota
+router.delete('/nota/:id', async(req, res) => {
+  const _id = req.params.id;
+  try {
+    const notaDb = await Nota.findByIdAndDelete({_id});
+    if(!notaDb){
+      return res.status(400).json({
+        mensaje: 'No se encontró el id indicado',
         error
       })
-    }else{
-      res.status(200).json(result)
     }
-  })
- 
-
+    res.json(notaDb);  
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'Ocurrio un error',
+      error
+    })
+  }
 });
-  // READ todos los documentos
-  router.get('/read', (req, res) => {
 
-      const query="SELECT * FROM usuarios"
-      connection.query(query,(error,result)=>{
-        if(error){
-          res.status(400).json({
-            mensaje: "Ocurrió un error",
-            error
-          })
-        }else{
-          res.status(200).json(result)
-
-        }
-      })
-     
-   
-  });
-
-  // UPDATE (No olvidar poner entre '' los parámetros que se van a modificar en la query!)
-router.put('/update/:id', (req, res) => {
-    const _id = req.params.id;
-    const {nombre,apellido}=req.body;
-    const query=`UPDATE usuarios SET nombre = '${nombre}', apellido = '${apellido}' WHERE id = ${_id}`
-    connection.query(query,(error,result)=>{
-      if(error){
-        res.status(400).json({
-          mensaje: "Ocurrió un error",
-          error
-        })
-      }else{
-        res.status(200).json(result)
-      }
+// Put actualizar una nota
+router.put('/nota/:id', async(req, res) => {
+  const _id = req.params.id;
+  const body = req.body;
+  try {
+    const notaDb = await Nota.findByIdAndUpdate(
+      _id,
+      body,
+      {new: true});
+    res.json(notaDb);  
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'Ocurrio un error',
+      error
     })
-   
-  
-  });
+  }
+});
 
-  // DELETE
-router.delete('/delete/:id', async(req, res) => {
-    const _id = req.params.id;
-    const query=`DELETE FROM usuarios where usuarios.id=${_id}`
-    connection.query(query,(error,result)=>{
-      if(error){
-        res.status(400).json({
-          mensaje: "Ocurrió un error",
-          error
-        })
-      }else{
-        res.status(200).json(result)
-      }
-    })
-   
-  
-  });
-// Exportamos la configuración de express app
+// Exportación de router
 module.exports = router;
