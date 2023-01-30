@@ -12,6 +12,6 @@ const schema = new Schema({
 });
 
 // Convertir a un modelo 
-const Nota = mongoose.model('Nota', schema);
+const Api = mongoose.model('EjemploApiDB', schema);
 
-export default Nota;
+export default Api;

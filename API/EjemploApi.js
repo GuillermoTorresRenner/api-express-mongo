@@ -5,7 +5,7 @@ const router = express.Router();
 import Nota from '../models/EjemploModel';
 
 // Agregar una nota
-router.post('/nueva-nota', async(req, res) => {
+router.post('/create', async(req, res) => {
   const body = req.body;  
   try {
     const notaDB = await Nota.create(body);
@@ -19,7 +19,7 @@ router.post('/nueva-nota', async(req, res) => {
 });
 
 // Get con parámetros
-router.get('/nota/:id', async(req, res) => {
+router.get('/read/:id', async(req, res) => {
   const _id = req.params.id;
   try {
     const notaDB = await Nota.findOne({_id});
@@ -33,7 +33,7 @@ router.get('/nota/:id', async(req, res) => {
 });
 
 // Get con todos los documentos
-router.get('/nota', async(req, res) => {
+router.get('/read', async(req, res) => {
   try {
     const notaDb = await Nota.find();
     res.json(notaDb);
@@ -46,7 +46,7 @@ router.get('/nota', async(req, res) => {
 });
 
 // Delete eliminar una nota
-router.delete('/nota/:id', async(req, res) => {
+router.delete('/delete/:id', async(req, res) => {
   const _id = req.params.id;
   try {
     const notaDb = await Nota.findByIdAndDelete({_id});
@@ -66,7 +66,7 @@ router.delete('/nota/:id', async(req, res) => {
 });
 
 // Put actualizar una nota
-router.put('/nota/:id', async(req, res) => {
+router.put('/update/:id', async(req, res) => {
   const _id = req.params.id;
   const body = req.body;
   try {
