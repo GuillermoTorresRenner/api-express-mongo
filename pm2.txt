@@ -1,0 +1,5 @@
+para poder poner el archivo con pm 2 ejecutar:
+
+pm2 start npm -- run start --watch --name servidor
+
+
