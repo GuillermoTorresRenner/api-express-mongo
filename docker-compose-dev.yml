@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: dockerfile.dev
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    volumes:
+      - .:/app
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=guille
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    volumes:
+      - mongo-data:/data/db #Ruta donde se guardan los datos de mongo
+      # mysql ->/var/lib/mysql es donde se guardan los datos
+      # postgres ->/var/lib/postgresql/data es donde se guardan los datos
+volumes:
+  mongo-data:
+
+  #ejecuar docker-compose -f docker-compose-dev.yml up

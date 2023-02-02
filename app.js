@@ -8,7 +8,7 @@ const app = express();
 // Conexion a DB
 
   //Conexión a la base de datos
-  const uri='mongodb://arcanum.servebeer.com:27017/EjemploDB';
+  const uri='mongodb://guille:secret@mongo:27017/EjemploDB?authSource=admin'; //Poner el nombre del contenedor de mongo en docker en vez de localhost
   const options = {useNewUrlParser: true,useUnifiedTopology:true };
   mongoose.set("strictQuery",false);
 
