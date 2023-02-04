@@ -9,7 +9,7 @@ const app = express();
 
   //Conexión a la base de datos
   const uri='mongodb://guille:secret@mongo:27017/EjemploDB?authSource=admin'; //Poner el nombre del contenedor de mongo en docker en vez de localhost
-  const options = {useNewUrlParser: true,useUnifiedTopology:true };
+  const options = {useNewUrlParser: true,useUnifiedTopology:true,family:4};
   mongoose.set("strictQuery",false);
 
 

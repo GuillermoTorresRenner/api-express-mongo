@@ -92,7 +92,7 @@ router.put('/update-user/:id', [verificarAuth,verificarAdministador],async(req, 
   });
 
   // DELETE
-router.delete('/delete/:id', async(req, res) => {
+router.delete('/delete-user/:id', async(req, res) => {
     const _id = req.params.id;
     try {
       const destroy = await UserModel.findByIdAndDelete({_id});

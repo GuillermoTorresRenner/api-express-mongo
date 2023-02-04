@@ -8,7 +8,7 @@ services:
       - mongo
 
   mongo:
-    image: mongo
+    image: mongo:4.2.22-bionic
     ports:
       - "27017:27017"
     environment:
