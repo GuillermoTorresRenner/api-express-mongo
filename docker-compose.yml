@@ -6,12 +6,14 @@ services:
       - "3000:3000"
     links:
       - mongo
+    restart: always
 
   mongo:
     image: mongo:4.2.22-bionic
     ports:
       - "27017:27017"
-    environment:
+    restart: always
+		environment:
       - MONGO_INITDB_ROOT_USERNAME=guille
       - MONGO_INITDB_ROOT_PASSWORD=secret
     volumes:
