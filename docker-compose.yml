@@ -9,11 +9,11 @@ services:
     restart: always
 
   mongo:
-    image: mongo:4.2.22-bionic
+    image: mongo:latest
     ports:
       - "27017:27017"
     restart: always
-		environment:
+    environment:
       - MONGO_INITDB_ROOT_USERNAME=guille
       - MONGO_INITDB_ROOT_PASSWORD=secret
     volumes:

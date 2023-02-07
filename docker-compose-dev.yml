@@ -10,9 +10,11 @@ services:
       - mongo
     volumes:
       - .:/app
+    restart: always
 
   mongo:
     image: mongo
+    restart: always
     ports:
       - "27017:27017"
     environment:

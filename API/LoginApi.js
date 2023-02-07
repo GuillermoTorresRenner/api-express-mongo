@@ -17,12 +17,12 @@ router.post("/",async (req,res)=>{
     const usuarioDB= await UserModel.findOne({email:body.email})
     //Coprobamos que el usuario exista, o mandaos un error.
     if (!usuarioDB) {
-        return res.status(404).json({message: "Email o Password incorrectos"})
+        return res.status(404).json({mensaje: "Email o Password incorrectos"})
         
     }
     //Si el usuario existe comparamos el pass usando bcrypt para desencriptar.
    if ( !bcrypt.compareSync(body.password,usuarioDB.password)) {
-        res.json({message:"Email o Password incorrectos"})
+        res.status(404).json({mensaje:"Email o Password incorrectos"})
    }
 
 

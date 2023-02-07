@@ -19,7 +19,7 @@ const _ = require('underscore');
 
 
 // CREATE
-router.post('/create-user', async(req, res) => {
+router.post('/create-user',[verificarAuth,verificarAdministador], async(req, res) => {
  //Desestructuramos el body para poder encriptar la contraseña con bcrypt
 
  const body={
@@ -40,7 +40,7 @@ router.post('/create-user', async(req, res) => {
 });
 
 //READ con parámetros
-router.get('/read-user/:id', async(req, res) => {
+router.get('/read-user/:id', [verificarAuth,verificarAdministador],async(req, res) => {
     const _id = req.params.id;
     try {
       const read = await UserModel.findOne({_id});
@@ -54,7 +54,7 @@ router.get('/read-user/:id', async(req, res) => {
   });
   
   // READ todos los documentos
-  router.get('/read-user', async(req, res) => {
+  router.get('/read-user', [verificarAuth,verificarAdministador],async(req, res) => {
     try {
       const read = await UserModel.find();
       res.json(read);
@@ -92,7 +92,7 @@ router.put('/update-user/:id', [verificarAuth,verificarAdministador],async(req, 
   });
 
   // DELETE
-router.delete('/delete-user/:id', async(req, res) => {
+router.delete('/delete-user/:id', [verificarAuth,verificarAdministador],async(req, res) => {
     const _id = req.params.id;
     try {
       const destroy = await UserModel.findByIdAndDelete({_id});
