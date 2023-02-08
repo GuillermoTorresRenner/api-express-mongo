@@ -1,5 +1,5 @@
 <template>
-    <q-page > index</q-page>
+    <q-page > <h1>index</h1></q-page>
 </template>
 
 <script setup>

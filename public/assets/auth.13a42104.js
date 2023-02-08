@@ -1,0 +1,1 @@
+import{b as s,u as t}from"./index.2160a12d.js";const m=t();var i=s(({router:o,store:u})=>{o.beforeEach((r,f,e)=>{r.matched.some(a=>a.meta.requireAuth&&m.getToken==="")?e({name:"Login"}):e()})});export{i as default};

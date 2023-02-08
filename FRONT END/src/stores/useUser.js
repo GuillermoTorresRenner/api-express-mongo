@@ -29,6 +29,7 @@ export const useUser = defineStore('user', {
       }else{
         this.saveUser("");
       }
-    }
+    },
+
   },
 });
